@@ -1,10 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-            args '-v /var/jenkins_home/workspace:/workspace -w /workspace'
-        }
+    agent any
+    
+    tools {
+        nodejs 'NodeJS'  // You need to configure NodeJS in Jenkins Global Tool Configuration
     }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -13,12 +13,12 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         stage('Run Tests') {
             steps {
-                sh 'npm test || echo "No tests defined"'
+                bat 'npm test || echo "No tests defined"'
             }
         }
     }
